@@ -30,9 +30,8 @@
 #include <stdlib.h>
 #include <sys/resource.h>
 
-/* inner types */
-
 #define ELEMENT(arr, i, size) ((void *) ((char *) (arr) + ((size) * (i))))
+
 #define COPY_ELEMENT(src, src_index, dest, dest_index, size) \
   memcpy (ELEMENT (dest, dest_index, size), \
           ELEMENT (src, src_index, size), size);
@@ -69,10 +68,10 @@ merge (void *arr1, size_t len1,
  * This is the core mergesort function.  The other one -- mergesort() --
  * is a simple wrapper that does a onetime initialization before start.
  */
-void
+static void
 mergesort_core (void *base, size_t num, mergesort_cfg_t *cfg);
 
-void *
+static void *
 sort_slice (void *arg);
 
 void
@@ -148,7 +147,7 @@ merge (void *a, size_t lena,
     }
 }
 
-void
+static void
 mergesort_core (void *base, size_t num, mergesort_cfg_t *cfg)
 {
   void    *arr1;                /* Slice 1 */
@@ -266,7 +265,7 @@ mergesort_core (void *base, size_t num, mergesort_cfg_t *cfg)
 #endif
 }
 
-void *
+static void *
 sort_slice (void *arg)
 {
   slice_t *slice = (slice_t *) arg;
